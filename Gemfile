@@ -29,3 +29,5 @@ source 'https://rubygems.org'
  gem 'turbolinks'
  # bootstrap-sass
  gem 'bootstrap-sass'
+ # ionicons for rails
+ gem 'ionicons-rails', '~> 2.0'
