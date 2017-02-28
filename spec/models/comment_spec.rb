@@ -7,7 +7,13 @@ RSpec.describe Comment, type: :model do
     
     describe "attributes" do
         it "has a body attribute" do
-            expect(comment).to have_attributes(body: 'Comment Body')
+            expect(comment).to have_attributes(body: 'Comment Body', post: post)
+        end
+    end
+       
+    describe "associations" do 
+        it "belong to post" do
+            expect(comment.post.title).to eq(post.title)
         end
     end
 end
