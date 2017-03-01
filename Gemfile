@@ -10,6 +10,8 @@ source 'https://rubygems.org'
  
  group :development do
    gem 'sqlite3'
+   # pry-rails
+   gem 'pry-rails'
  end
 
  group :development, :test do
