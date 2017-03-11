@@ -1,0 +1,20 @@
+<h1>Advertisements#new</h1>
+<p>Find me in app/views/advertisements/new.html.erb</p>
+
+<%= form_for @advertisement do |f| %>
+    <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control', placeholder: "enter Ad title" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :body %>
+        <%= f.text_area :body, rows: 5, class: 'form-control', placeholder: "Enter Ad title" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :Price %>
+        <%= f.text_field :price, col: 10, class: 'form-control', placeholder: "Enter Ad title" %>
+    </div>
+    <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-success" %>
+    </div>
+<% end %>
