@@ -1,0 +1,22 @@
+<h1><%= @question.title %></h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <p><%= @question.body %></p>
+    </div>
+    <div class="col-md-8">
+        <p>status: 
+        <% if @question.resolved %>
+            resolved
+        <% else %>
+            unresolved
+        <% end %>
+        </p>
+    </div>
+    
+    <div class="col-md-4">
+        <%= link_to "Edit", edit_question_path(@question.id), class:"btn btn-success" %>
+        <%= link_to "Delete Question", @question, method: :delete, class:"btn btn-danger", data: {confirm: 'Are you sure you\'d like to delete this post?'} %>
+    </div>
+    
+</div>

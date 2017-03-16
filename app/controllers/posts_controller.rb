@@ -34,6 +34,7 @@ class PostsController < ApplicationController
   
   def update
     @post = Post.find(params[:id])
+    puts params[:post][:title]
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
     

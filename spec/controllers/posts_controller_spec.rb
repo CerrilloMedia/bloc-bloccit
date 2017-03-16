@@ -103,26 +103,29 @@ RSpec.describe PostsController, type: :controller do
   describe "PUT update" do
     
     it "updates post with expected attributes" do
-      new_title = RandomData.random_sentence.concat("_random")
-      new_body = RandomData.random_paragraph.concat("_random")
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
       
       put :update, id: my_post.id, post: {title: new_title, body: new_body }
       
-      update_post = assigns(:post)
-      expect(update_post.id).to eq my_post.id
-      expect(update_post.title).to eq my_post.title
-      expect(update_post.body).to eq my_post.body
+      updated_post = assigns(:post)
+      # verify ID has not changed
+      expect(updated_post.id).to eq my_post.id
+      
+      # very new_ variable match the updated variables in the db
+      expect(updated_post.title).to eq new_title
+      expect(updated_post.body).to eq new_body
     end
     
     it "redirects to the updated post" do
-      new_title = RandomData.random_sentence.concat("_random")
-      new_body = RandomData.random_paragraph.concat("_random")
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
       
       put :update, id: my_post.id, post: {title: new_title, body: new_body} #<--- passing :id and :post as part of params
       # Should redirect to my_post page for the recently updated post.
       expect(response).to redirect_to my_post
       
-    end
+    # end
     
   end
   
@@ -140,6 +143,7 @@ RSpec.describe PostsController, type: :controller do
       
       expect(response).to redirect_to posts_path
     end
-  end
     
+  end
+  
 end

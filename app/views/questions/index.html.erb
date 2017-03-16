@@ -1,0 +1,11 @@
+<h2>Displaying <%= @questions.all.count %> total questions</p>
+<% @questions.each do |question| %>
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">
+                <%= link_to question.title, question %>
+                <% if question.resolved %><i>resolved</i><% end %>
+            </h4>
+        </div>
+    </div>
+<% end %>

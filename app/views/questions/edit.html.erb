@@ -1,0 +1,18 @@
+<h2>Edititing: <i><%= @question.title %></i></h2>
+
+<%= form_for @question do |f| %>
+    <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title , class: 'form-control', placeholder: "Enter new question title"%>
+    </div>
+    <div class="form-group">
+        <%= f.label :body %>
+        <%= f.text_area :body, rows: 5, class: 'form-control', placeholder: "Update question detail" %>
+    </div>
+    <div class="form-group">
+        <%= f.check_box :resolved, class: 'checkbox' %><%= f.label :resolved, class: 'checkbox' %>
+    </div>
+    <div class="form-group">
+        <%= f.submit "Update", class: 'btn btn-success' %>
+    </div>
+<% end %>
