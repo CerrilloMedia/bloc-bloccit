@@ -1,14 +1,15 @@
 class PostsController < ApplicationController
   
-  def index
-    @posts = Post.all
-  end
+  # def index
+  #   @posts = Post.all
+  # end
 
   def show
       @post = Post.find(params[:id])
   end
 
   def new
+    @topic = Topic.find(params[:topic_id])
     # the new.html view needs this info when setting up the form prior to sending it to the create method which posts it to the DB
     @post = Post.new
   end
@@ -18,9 +19,12 @@ class PostsController < ApplicationController
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
     
+    @topic = Topic.find(params[:topic_id])
+    @post.topic = @topic
+    
     if @post.save
       flash[:notice] = "Post was saved"
-      redirect_to @post
+      redirect_to [@topic, @post]
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :new
@@ -39,7 +43,7 @@ class PostsController < ApplicationController
     
     if @post.save
       flash[:notice] = "Post was succesfully updated"
-      redirect_to @post
+      redirect_to [@post.topic, @post]
     else
       flash.now[:alert] = "There was an error updating the post. Please try again."
       render :edit
@@ -52,7 +56,7 @@ class PostsController < ApplicationController
     
     if @post.destroy
       flash[:notice] = "post \"#{@post.title}\" was deleted successfully."
-      redirect_to posts_path
+      redirect_to @post.topic
     else
       flash.now[:alert] = "error deleting post. Please try again"
       render :show
