@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
     end
     
     def show
-      @topic = Topic.find(params[:id]) 
+      @topic = Topic.find(params[:id])
     end
     
     def new
@@ -39,7 +39,7 @@ class TopicsController < ApplicationController
         if @topic.save
             redirect_to @topic, notice: "Topic was saved successfully."
         else
-            flash.now[:alert] = "Error creating topic. Please try again."
+            flash.now[:alert] = "Error updating topic. Please try again."
             render :edit
         end
     end

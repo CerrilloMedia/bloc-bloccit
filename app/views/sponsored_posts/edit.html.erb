@@ -1,0 +1,31 @@
+<h1>Edit: <%= @sponsored_post.title %></h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <p>Guidelines for sponsored posts</p>
+        <ul>
+            <li>Don't be mean</li>
+            <li>Can't sell beer without sending me one</li>
+            <li>You do not talk about Fight Club</li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <%= form_for [@sponsored_post.topic, @sponsored_post] do |f| %>
+            <div class="form-group">
+                <%= f.label :title %>
+                <%= f.text_field :title, class: 'form-control', placeholder: "Enter sponsored-post title" %>
+            </div>
+            <div class="form-group">
+                <%= f.label :body %>
+                <%= f.text_area :body , class: 'form-control', placeholder: "Enter sponsored-post description" %>
+            </div>
+            <div class="form-group">
+                <%= f.label :price %>
+                <%= f.number_field :price, min: '1', class: 'form-control' %>
+            </div>
+            <div class="form-group">
+                <%= f.submit "Update", class: 'btn btn-success' %>
+            </div>
+        <% end %>
+    </div>
+</div>
