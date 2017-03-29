@@ -39,4 +39,14 @@ RSpec.describe User, type: :model do
             expect(user_with_invalid_email).to_not be_valid
         end
     end
+    
+    describe "valid user" do
+        
+        it "should capitalize first and last name" do
+            user.name = "lower case"
+            user.save
+            expect(user.name).to eq "Lower Case"
+        end
+        
+    end
 end

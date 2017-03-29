@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
     
-    
     before_save { self.email = email.downcase if email.present? }
+    before_save :capitalize_user_name
     
     validates :name, length: { minimum: 1, maximum: 100 }, presence: true
     
@@ -14,5 +14,11 @@ class User < ActiveRecord::Base
             length: { minimum: 3, maximum: 254 }
                 
     has_secure_password
+   
+    def capitalize_user_name
+        if name
+            self.name = name.split(" ").map{ |n| n.capitalize }.join(" ")
+        end
+    end
     
 end
