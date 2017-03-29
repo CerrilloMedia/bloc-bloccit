@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :posts, except: [:index] # children. #index is no longer an available view since we now list them in the parents #show view
   end
   
+  resources :users, only: [:new, :create]
+  
   get 'about' => "welcome#about"
   
   root 'welcome#index'
