@@ -6,4 +6,12 @@ module ApplicationHelper
     #5
         content_tag :div, capture(&block), class: css_class
     end
+    
+    def avatar_url(user)
+        if user
+            gravatar_id = Digest::MD5::hexdigest(user.email).downcase
+       
+            "https://gravatar.com/avatar/#{gravatar_id}.png?s=48"
+        end
+    end
 end

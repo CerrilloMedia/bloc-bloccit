@@ -16,10 +16,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.user-info {
-    margin-top: 9px;
-}
-
 .nav {
     margin-top: 5px;
+}
+
+.user-info {
+    text-align: right;
+    margin-right: 10px;
+    margin: 10px 5px 5px 0;
 }
