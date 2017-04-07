@@ -14,4 +14,16 @@ class Post < ActiveRecord::Base
     # scoping posts allows us to retrieve and order posts by their created_at date in descending order
     default_scope { order('created_at DESC') }
     
+    scope :ordered_by_title, -> { order('title') }
+    
+    scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
+    
+    # def self.ordered_by_title
+    #   order('title')
+    # end
+    
+    # def self.ordered_by_reverse_created_at
+    #     order('created_at ASC')
+    # end
+    
 end
