@@ -7,7 +7,7 @@ RSpec.describe PostsController, type: :controller do
   # adding type :controller allows us to simulate controller actions such as HTTP requests.
   
   # adding a user to Posts
-  let (:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
   
   let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
   
