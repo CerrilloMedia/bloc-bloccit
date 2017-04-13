@@ -3,7 +3,9 @@ class TopicsController < ApplicationController
     # all views are available to members/admins while guests are only allowed the index/show views
     before_action :require_sign_in, except: [:index, :show]
     
-    before_action :authorize_user, except: [:index, :show]
+    before_action :authorize_user, except: [:index, :show, :edit, :update]
+    
+    before_action :authorize_update, only: [:edit, :update]
     
     def index
        @topics = Topic.all
@@ -65,8 +67,15 @@ class TopicsController < ApplicationController
     
     def authorize_user
         unless current_user.admin?
-            flash[:alert] = "You must be an admin to do that."
-            redirect_to topics_path 
+            flash[:alert] = "You must be an Admin to do that."
+            redirect_to topics_path
+        end
+    end
+    
+    def authorize_update
+        unless current_user.moderator? || current_user.admin?
+            flash[:alert] = "You do not have proper authorization for that."
+            redirect_to topics_path
         end
     end
     

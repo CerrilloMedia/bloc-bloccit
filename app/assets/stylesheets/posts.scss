@@ -1,3 +1,12 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.glyphicon-post {
+    font-size: 17px;
+    color: rgba(150,150,150,.5);
+    margin: .3em;
+}
+.glyphicon-post:hover {
+    text-decoration: none;
+}

@@ -9,3 +9,27 @@
 .button-group {
     margin: 5px;
 }
+
+.glyphicon-topic {
+    font-size: 13pt;
+    color: rgba(150,150,150,.5);
+    margin: .3em;
+}
+.glyphicon-topic:hover {
+    text-decoration: none;
+}
+
+.glyphicon-trash {
+    transition: all .5s ease;
+}
+.glyphicon-trash:hover {
+    color: #c9302c;
+    text-shadow: 0em 0em 0.01em #ac2925;
+}
+.glyphicon-edit {
+    transition: all .5s ease;
+}
+.glyphicon-edit:hover {
+    color: #449d44;
+    text-shadow: 0em 0em 0.01em #4cae4c;
+}

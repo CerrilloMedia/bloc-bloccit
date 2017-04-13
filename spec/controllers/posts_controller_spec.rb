@@ -8,10 +8,12 @@ RSpec.describe PostsController, type: :controller do
   
   # adding a user to Posts
   let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+  let(:other_user) { User.create!(name: "Other Bloccit User", email: "other_user@bloccit.com", password: "goodbyeworld") }
   
   let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
   
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+  let(:other_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: other_user) }
   
   context "guest user" do
     
@@ -73,9 +75,11 @@ RSpec.describe PostsController, type: :controller do
     
   end
   
-  context "singned-in user" do
+  context "signed-in user" do
     
     before do
+      my_user.member!
+      my_user.member?
       create_session(my_user)
     end
     
@@ -160,6 +164,11 @@ RSpec.describe PostsController, type: :controller do
         expect(post_instance.body).to eq my_post.body
       end
       
+      it "is not authorized to edit another users post" do
+        get :edit, topic_id: my_topic.id, id: other_post.id
+        expect(response).to redirect_to topic_post_url
+      end
+      
     end
     
     describe "PUT update" do
@@ -202,6 +211,88 @@ RSpec.describe PostsController, type: :controller do
         # instead of redirecting to the posts/index, we now go to the parent topic/show path
         expect(response).to redirect_to my_topic
       end
+    end
+    
+  end
+  
+  context "moderator user" do
+    
+    before do
+      my_user.moderator!
+      other_user.member!
+      create_session(my_user)
+    end
+    
+    describe "GET new" do
+      
+      it "returns http success" do
+        get :new, topic_id: my_topic.id
+        expect(response).to have_http_status(:success)
+      end
+      
+      it "renders the #new view" do
+        get :new, topic_id: my_topic.id
+        expect(response).to render_template :new
+      end
+      
+      it "instantiates @post" do
+        get :new, topic_id: my_topic.id
+        expect(assigns(:post)).not_to be_nil
+      end
+    end
+    
+    describe "POST create" do
+      
+      it "increases Post count by 1" do
+        expect{ post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph} }.to change(Post, :count).by(1)
+      end
+      
+      it "assigns the new post to @post" do
+        post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+        # expect newly created post is equal to the last one in the Post table in db
+        expect(assigns(:post)).to eq Post.last
+      end
+      
+      it "redirects to the new post" do
+        post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+        # expect to redirect to most recent posts view
+        expect(response).to redirect_to [my_topic, Post.last]
+      end
+      
+      
+    end
+    
+    describe "GET edit" do
+      # expect my_user to gain access to the edit view for other_post
+      it "edits another users post" do
+        get :edit, topic_id: my_topic.id, id: other_post.id
+        expect(response).to have_http_status(:success)
+      end
+      
+    end
+    
+    describe "PUT update" do
+      
+      it "can update another users posts" do
+        new_title = "New title from moderator"
+        new_body = "New body form moderator"
+        
+        put :update, topic_id: my_topic.id, id: other_post.id, post: {title: new_title, body: new_body }
+        updated_post = assigns(:post)
+        
+        expect(updated_post.title).to eq new_title
+        expect(updated_post.body).to eq new_body
+      end
+      
+    end
+    
+    describe "DELETE destroy" do
+      
+      it "returns http redirect" do
+        delete :destroy, topic_id: my_topic.id, id: other_post.id
+        expect(response).to have_http_status(:redirect)
+      end
+      
     end
     
   end

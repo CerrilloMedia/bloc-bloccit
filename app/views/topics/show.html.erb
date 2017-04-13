@@ -1,5 +1,12 @@
 <h1><%= @topic.name %></h1>
-
+<% if user_is_authorized_for_topics? %>
+    <div class="button-group">
+        <%= link_to "", edit_topic_path, class: "glyphicon glyphicon-edit glyphicon-topic", title: "edit" %>
+        <% if current_user.admin? %>
+            <%= link_to "", @topic, method: :delete, class: "glyphicon glyphicon-trash glyphicon-topic", title: "delete", data: { confirm: "Are you sure you want to delete this topic?"} %>
+        <% end %>
+    </div>
+<% end %>
 <div class="row">
     <div class="col-md-8">
         <p class="lead"><%= @topic.description %></p>
@@ -27,7 +34,9 @@
         <% if user_is_authorized_for_topics? %>
             <div class="button-group">
                 <%= link_to "Edit Topic", edit_topic_path, class: 'btn btn-success' %>
-                <%= link_to "Delete Topic", @topic, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete this topic?"} %>
+                <% if current_user.admin? %>
+                    <%= link_to "Delete Topic", @topic, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure you want to delete this topic?"} %>
+                <% end %>
             </div>
         <% end %>
     </div>
