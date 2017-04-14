@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
     has_many :posts #make sure to add [belongs_to :user] to the posts model.
+    has_many :comments
     
     before_save { self.email = email.downcase if email.present? }
     
