@@ -3,6 +3,9 @@
     <h1>
         <div class="col-md-8">
             <%= @post.title %>
+            <% if user_has_voted?(@post) %>
+                <span class="glyphicon glyphicon-ok-circle voted-post-glyph" title="you have voted on this"></span>
+            <% end %>
             <% if user_is_authorized_for_post?(@post) %>
                 <%= link_to "", edit_topic_post_path(@post.topic, @post), class:"glyphicon glyphicon-edit glyphicon-post", title: "edit post" %>
                 <% if user_is_authorized_to_destroy?(@post) %>

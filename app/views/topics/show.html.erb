@@ -19,6 +19,9 @@
                     
                     <h4 class="media-heading">
                         <%= link_to post.title, topic_post_path(@topic, post) %>
+                        <% if user_has_voted?(post) %>
+                            <span class="glyphicon glyphicon-ok-circle voted-post-in-topic-glyph" title="you have voted on this"></span>
+                        <% end %>
                     </h4>
                     <small>
                         submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>

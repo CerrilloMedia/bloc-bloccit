@@ -87,6 +87,7 @@ class PostsController < ApplicationController
       flash[:alert] = "As a #{current_user.role}, you are not the authorized for such a request."
       redirect_to [post.topic, post]
     end
+    
   end
   
 end

@@ -27,11 +27,12 @@ RSpec.describe Post, type: :model do
     it { is_expected.to validate_length_of(:title).is_at_least(5) }
     it { is_expected.to validate_length_of(:body).is_at_least(20) }
     
-    describe "attributes" do 
+    describe "attributes" do
         
         it "has a title, body and user attribute" do
             expect(post).to have_attributes(title: title, body: body, user: user)
         end
+        
     end
     
     describe "voting" do
@@ -58,7 +59,7 @@ RSpec.describe Post, type: :model do
         describe "#points" do
     
             it "returns the sum of all down and up votes" do
-                expect( post.points ).to eq(1) # 3 - 2
+                expect( post.points ).to eq(@up_votes - @down_votes)
             end
             
         end
@@ -85,7 +86,16 @@ RSpec.describe Post, type: :model do
             end
         
         end
+        
   
+    end
+    
+    describe "#create_vote" do
+        
+        it "creates an initial vote to the newly created post" do
+            expect(post.votes.where(value: 1).count).to eq(1)
+        end
+        
     end
     
 end
