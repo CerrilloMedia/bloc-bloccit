@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-    has_many :posts #make sure to add [belongs_to :user] to the posts model.
-    has_many :comments
+    has_many :posts, dependent: :destroy #make sure to add [belongs_to :user] to the posts model.
+    has_many :comments, dependent: :destroy
+    has_many :votes, dependent: :destroy
     
     before_save { self.email = email.downcase if email.present? }
     

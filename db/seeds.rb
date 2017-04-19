@@ -21,12 +21,18 @@ end
 topics = Topic.all
 #Create Posts
 50.times do
-    Post.create!(
+    post = Post.create!(
         topic:  topics.sample,
         title:  RandomData.random_sentence,
         body:   RandomData.random_paragraph,
         user:  users.sample
     )
+    #   update the created at attribute with a date/time range from 10 min to 1 year, ago.
+    post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+    
+    # random between 1 - 5      and      choose a value between -1 & 1
+    rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
+    
 end
 
 posts = Post.all
@@ -56,5 +62,4 @@ puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
-
-
+puts "#{Vote.count} votes created"

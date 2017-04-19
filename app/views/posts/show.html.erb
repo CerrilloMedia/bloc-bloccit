@@ -1,20 +1,35 @@
-<h1>
-    <%= @post.title %>
-    <% if user_is_authorized_for_post?(@post) %>
-        <%= link_to "", edit_topic_post_path(@post.topic, @post), class:"glyphicon glyphicon-edit glyphicon-post", title: "edit" %>
-        <% if user_is_authorized_to_destroy?(@post) %>
-            <%= link_to "", [@post.topic, @post], method: :delete, class:"glyphicon glyphicon-trash glyphicon-post", title: "delete", data: {confirm: 'Are you sure you\'d like to delete this post?'}  %>
-        <% end %>
-    <% end %>
-    <br>
-    <small>
-        submitted <%= time_ago_in_words(@post.created_at) %> ago by <%= @post.user.name %>
-    </small>
-</h1>
-
+<div>
+    <%= render partial: 'votes/voter', locals: { post: @post } %>
+    <h1>
+        <div class="col-md-8">
+            <%= @post.title %>
+            <% if user_is_authorized_for_post?(@post) %>
+                <%= link_to "", edit_topic_post_path(@post.topic, @post), class:"glyphicon glyphicon-edit glyphicon-post", title: "edit post" %>
+                <% if user_is_authorized_to_destroy?(@post) %>
+                    <%= link_to "", [@post.topic, @post], method: :delete, class:"glyphicon glyphicon-trash glyphicon-post", title: "delete post", data: {confirm: 'Are you sure you\'d like to delete this post?'}  %>
+                <% end %>
+            <% end %>
+        </div>
+    <div class="col-md-2">
+        <h3>
+            <%= pluralize(@post.points, 'point') %>
+            <div>
+                <small>
+                    <%= pluralize(@post.up_votes, 'up vote') %>, <%= pluralize(@post.down_votes, 'down vote') %>
+                </small>
+            </div>
+        </h3>    
+    </div>
+        <small class="col-md-8">
+            submitted <%= time_ago_in_words(@post.created_at) %> ago by <%= @post.user.name %>
+        </small>
+    </h1>
+</div>
 <div class="row">
     <div class="col-md-8">
-        <p><%= @post.body %></p>
+        <h4>
+            <p><%= @post.body %></p>
+        </h4>
         <div>
             <h3>Comments</h3>
             <%= render @post.comments %>
