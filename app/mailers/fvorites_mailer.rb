@@ -1,0 +1,2 @@
+class FvoritesMailer < ApplicationMailer
+end

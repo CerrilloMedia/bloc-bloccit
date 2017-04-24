@@ -15,10 +15,14 @@
             <%= pluralize(@post.points, 'point') %>
             <div>
                 <small>
-                    <%= pluralize(@post.up_votes, 'up vote') %>, <%= pluralize(@post.down_votes, 'down vote') %>
+                    <%= pluralize(@post.up_votes, 'up vote') %>, 
+                    <%= pluralize(@post.down_votes, 'down vote') %>
                 </small>
             </div>
-        </h3>    
+        </h3>
+        <% if current_user %>
+            <%= render partial: 'favorites/favorite', locals: {post: @post} %>
+        <% end %>
     </div>
         <small class="col-md-8">
             submitted <%= time_ago_in_words(@post.created_at) %> ago by <%= @post.user.name %>
