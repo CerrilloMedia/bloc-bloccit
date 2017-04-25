@@ -1,0 +1,5 @@
+Your new post has been created!
+<%= "=" * (@post.title.length + 12) %>
+You will also be notified of updates as users comment on your post.
+
+You can check out your post here in all its glory! <%= topic_post_url(@post.topic, @post) %>

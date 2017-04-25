@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     @post.user = current_user
     
     if @post.save
-      flash[:notice] = "Post was saved"
+      flash[:notice] = "Post was saved & favorited"
       redirect_to [@topic, @post]
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
