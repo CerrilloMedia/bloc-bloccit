@@ -16,8 +16,6 @@ class VotesController < ApplicationController
     private
     
     def update_vote(new_value)
-        puts "here is the #{params}"
-        
         @post = Post.find(params[:post_id])
         #                  #where - returns an array, first extracts it from the array of length 1
         @vote = @post.votes.where(user_id: current_user.id).first

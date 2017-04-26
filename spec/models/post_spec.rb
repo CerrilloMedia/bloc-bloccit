@@ -2,15 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Post, type: :model do
     
-    let(:name) { RandomData.random_sentence }
-    let(:description) { RandomData.random_paragraph }
-    let(:title) { RandomData.random_sentence }
-    let(:body) { RandomData.random_paragraph }
-    let(:topic) { Topic.create!( name: name, description: description ) }
-    let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld" ) }
-    
-    #build post with above content
-    let (:post) { topic.posts.create!(title: title , body: body, user: user) }
+                    # Factory_Girl builds(#create) for :topic, :user, :post 
+    let(:topic) { create(:topic) }
+    let(:user) { create(:user) }
+    let(:post) { create(:post) }
     
     # using 'shoulda' for association tests
     it { is_expected.to have_many(:comments) }
@@ -30,8 +25,8 @@ RSpec.describe Post, type: :model do
     
     describe "attributes" do 
         
-        it "has a title, body and user attribute" do
-            expect(post).to have_attributes(title: title, body: body, user: user)
+        it "has a title and body attributes" do
+            expect(post).to have_attributes(title: post.title, body: post.body)
         end
     end
     

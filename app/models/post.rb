@@ -16,6 +16,8 @@ class Post < ActiveRecord::Base
     # scoping posts allows us to retrieve and order posts by their created_at date in descending order
     default_scope { order('rank DESC') } # <-- update our default scope to filter by post rank as opposed to created_at.
     
+    scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
+    
     def up_votes
         # SQL query for any vote which is a value of 1
         votes.where(value: 1).count

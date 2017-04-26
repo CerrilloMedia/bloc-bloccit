@@ -1,2 +1,0 @@
-class FvoritesMailer < ApplicationMailer
-end

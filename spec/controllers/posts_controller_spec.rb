@@ -4,16 +4,12 @@ require 'rails_helper'
 include SessionsHelper
 
 RSpec.describe PostsController, type: :controller do
-  # adding type :controller allows us to simulate controller actions such as HTTP requests.
   
-  # adding a user to Posts
-  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:other_user) { User.create!(name: "Other Bloccit User", email: "other_user@bloccit.com", password: "goodbyeworld") }
-  
-  let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-  
-  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
-  let(:other_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: other_user) }
+  let(:my_topic) { create(:topic) }
+  let(:my_user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:my_post) { create(:post, topic: my_topic, user: my_user) }
+  let(:other_post) { create(:post, topic: my_topic, user: other_user) }
   
   context "guest user" do
     

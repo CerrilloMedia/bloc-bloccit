@@ -4,7 +4,7 @@ include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
     
-    let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+    let(:my_topic) { create(:topic) }
     
     context "guest" do
         
@@ -311,7 +311,6 @@ RSpec.describe TopicsController, type: :controller do
         before do
            user = User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld")
            user.moderator!
-           puts user.moderator?
            create_session(user)
         end
         
