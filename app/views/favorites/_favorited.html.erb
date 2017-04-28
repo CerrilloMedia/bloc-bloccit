@@ -1,0 +1,13 @@
+<% post = Post.find(favorite.id) %>
+<% post_author_id = Post.find(favorite.id).user_id %>
+<div class="media">
+    <div class="media-left">
+        <%= image_tag User.find(post_author_id).avatar_url(30), class: 'gravatar' %>
+    </div>
+    <div class="media-left">
+        <small><%= link_to post.title, topic_post_path(post.topic_id, post) %><br />
+            Author: <%= link_to User.find(post_author_id).name, user_path(post_author_id)%><br/>
+                Votes: <%= Post.find(favorite.id).votes.count %> / Comments: <%= Post.find(favorite.id).comments.count %>
+        </small>
+    </div>
+</div>

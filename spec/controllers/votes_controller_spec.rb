@@ -8,7 +8,7 @@ RSpec.describe VotesController, type: :controller do
     let(:user_post) { create(:post, topic: my_topic, user: other_user ) }
     
     
-    let(:my_vote) { Vote.create!(value: 1) }
+    let(:my_vote) { create(:vote)}
     
     # youur user creates a topic and other_user creates a post within your topic (as a member), and you will vote on that post.
     

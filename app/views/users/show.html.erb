@@ -20,8 +20,29 @@
     </div>
 </div>
 
-<h2>Posts</h2>
-<%= render @user.posts %>
+<div class="row">
+    <div class="col-md-8">
+        <% if has_posts_or_comments?(@user) == 1 || has_posts_or_comments?(@user) == 3 %>
+            <h3>Posts</h3>
+        <% else %>
+            <p><%= "#{@user.name} has not submitted any posts yet" %></p>
+        <% end %>
+        <%= render @user.posts %>
+    
+        <% if has_posts_or_comments?(@user) == 2 || has_posts_or_comments?(@user) == 3 %>
+            <h3>Comments</h3>
+        <% else %>
+            <p><%= "#{@user.name} has not submitted any comments yet" %></p>
+        <% end %>
+        <%= render @user.comments %>
+    </div>
+</div>
 
-<h2>Comments</h2>
-<%= render @user.comments %>
+<% if @user.favorites.any? %>
+    <div class="col-md-12">
+        <h3>Favorited</h3>
+        <% @user.favorites.each do |favorite| %>
+            <%= render partial: 'favorites/favorited', locals: {favorite: favorite } %>
+        <% end %>
+    </div>
+<% end %>

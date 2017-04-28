@@ -63,12 +63,13 @@ RSpec.describe UsersController, type: :controller do
     end
     
     describe "not signed in" do
-       
+        
        let(:factory_user) { create(:user) }
-       
+        
        before do
-           post :create, user: new_user_attributes
+            post :create, { user: new_user_attributes }
        end
+       
        
        it "returns http success" do
           get :new, {id: factory_user.id }
@@ -83,7 +84,41 @@ RSpec.describe UsersController, type: :controller do
        it "assigns factory_user to @user" do
            get :show, {id: factory_user.id}
            expect(assigns(:user)).to eq(factory_user)
-       end
+       end 
+    end
+    
+    describe "favorited post" do
+         
+       let(:factory_user) { create(:user) }
         
+       before do
+            post :create, { user: new_user_attributes }
+       end
+       
+       it "it displays the total votes and comments for the favorited post" do
+           
+            author = assigns(:user)
+            post = FactoryGirl.create :post, user: author
+            comment = FactoryGirl.create :comment, post: post
+            vote = FactoryGirl.create :vote, post: post
+            favorite = Favorite.create!(post: post, user: factory_user)
+            author = User.find(post.user_id)
+           
+            get :show, { id: factory_user.id }
+            
+            favorited_post = assigns(:user).favorites.first
+            comments = Post.find(favorited_post.post_id).comments.count
+            votes = Post.find(favorited_post.post_id).votes.count
+            
+            # The users favorited post comment-total
+            expect(comments).to eq(1)
+            
+            # The users favorited post vote-total
+            expect(votes).to eq(1)
+            
+            # 
+            # not sure how to go about matching/verifying gravatar_url's in the view
+       end
+       
     end
 end

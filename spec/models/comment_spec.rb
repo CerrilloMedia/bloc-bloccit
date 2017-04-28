@@ -6,7 +6,7 @@ RSpec.describe Comment, type: :model do
     let(:user) { create(:user) }
     let(:post) { create(:post) }
 
-    let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
+    let(:comment) { create(:comment) }
     
     # utilizing SHOULDA
     it { is_expected.to belong_to(:post) }
@@ -17,7 +17,8 @@ RSpec.describe Comment, type: :model do
     
     describe "attributes" do
         it "responds to body" do
-            expect(comment).to have_attributes(body: 'Comment Body')
+            comment_body = comment.body
+            expect(comment).to have_attributes(body: comment_body)
         end
     end
     
