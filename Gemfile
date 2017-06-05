@@ -35,5 +35,5 @@ source 'https://rubygems.org'
  gem 'bootstrap-sass'
  # Used for encrypting User passwords
  gem 'bcrypt'
- # Figaro
+ # Figaro - for handling production and test ENV variables
  gem 'figaro', '1.0'
